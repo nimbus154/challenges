@@ -1,0 +1,11 @@
+{
+  "name": "interval",
+  "version": "0.0.0",
+  "description": "",
+  "main": "interval.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "nimbus154",
+  "license": "MIT"
+}

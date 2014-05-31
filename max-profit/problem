@@ -1,0 +1,19 @@
+Given a chart of stock prices over 40 days, with daily min, max, and
+starting price, write an algorithm to find the max profit that could
+have been made over a given day range. Buy and sell must take place at
+the start of the day.
+
+In other words, given
+[
+	{ start: 5, min: 1, max: 8 }, // day 0 
+	{ start: 5, min: 1, max: 8 },
+	{ start: 5, min: 1, max: 8 },
+	{ start: 5, min: 1, max: 8 } // day n
+]
+
+determine the max profit over a given day range. You must buy or sell
+at the start of the day.
+
+input: array of prices, range of days
+
+output: max profit

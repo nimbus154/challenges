@@ -1,0 +1,15 @@
+{
+  "name": "comboLock",
+  "version": "0.0.0",
+  "description": "",
+  "main": "soln.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "expect.js": "~0.2.0",
+    "mocha": "~1.17.0"
+  }
+}

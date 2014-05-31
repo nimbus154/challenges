@@ -1,0 +1,22 @@
+/*
+ 
+Interval Coding Challenge
+ 
+Given an array of arrays each containing two numbers that represent intervals, create a function to determine if there are any gaps within the series.
+ 
+For example:
+ 
+[ [0,4], [3,7] ] => false, no gaps
+----- [0,4]
+   ----- [3, 7]
+         
+[ [2,6], [7,9] ] => true, has gaps
+ ----- [2,6]
+       ----- [7, 9]
+ 
+[ [2,6], [9,12], [3,9] ] => false, no gaps
+ ----- [2,6]
+            ----- [9,12]
+     -------- [3,9]
+     
+*/

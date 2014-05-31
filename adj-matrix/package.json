@@ -1,0 +1,15 @@
+{
+  "name": "dailyProgrammer",
+  "version": "0.0.0",
+  "description": "Submissions for Reddit Daily Programmer problems",
+  "main": "index.js",
+  "scripts": {
+    "test": "~/dailyProgrammer/node_modules/mocha/bin/mocha"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "expect.js": "~0.2.0",
+    "mocha": "~1.17.0"
+  }
+}
