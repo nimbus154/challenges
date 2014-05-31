@@ -11,5 +11,9 @@
   "devDependencies": {
     "mocha": "~1.20.0",
     "should": "~4.0.0"
+  },
+  "dependencies": {
+    "split": "~0.3.0",
+    "priorityqueuejs": "~0.2.0"
   }
 }
