@@ -1,0 +1,12 @@
+// Find the shortest possible series of words, such that s -> t by 1-letter
+// transformations of words of exactly the same length
+// INPUT
+// s - string
+// t - string to transform to
+// D - set of strings
+// OUTPUT
+// shortest production sequence
+// or -1 if none
+// dog -> dag -> dan
+// Create graph of words in dictionary
+// see if you can traverse from s to t

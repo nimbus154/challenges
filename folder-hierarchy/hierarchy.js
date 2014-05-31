@@ -1,26 +1,3 @@
-/*
- * Given a JSON list of objects with the properties { id, name, parentId },
- * print an HTML tree hierarchy.
- * INPUT: 
- * [
- *   { id: 1, name: 'inbox', parentId: 0 },
- *   { id: 2, name: 'important', parentId: 1 },
- *   { id: 3, name: 'todo', parentId: 1 },
- *   { id: 4, name: 'archive', parentId: 0 },
- *   { id: 5, name: 'trash', parentId: 0 },
- *   { id: 6, name: 'personal', parentId: 2 },
- *   { id: 7, name: 'work', parentId: 2 } 
- * ]
- * OUTPUT: 
- * HTML that would produce: 
- * * inbox 
- *      * important 
- *          * personal 
- *          * work 
- *      * todo 
- * * archive 
- * * trash
- */
 const ROOT_ID = 0;
 
 /**
@@ -33,7 +10,7 @@ const ROOT_ID = 0;
 module.exports = function hierarchy (nodes) {
     // create hash parent -> children
     var treeHash = groupByParents(nodes); // O(n)
-    
+
     // traverse tree and create hierarchy
     return buildHierarchy (ROOT_ID, treeHash); // O(n)
 };
@@ -41,14 +18,14 @@ module.exports = function hierarchy (nodes) {
 /**
  * Hash groups of nodes by their parents
  * @param nodes - an array of nodes { id, name, parentId }
- * @returns a hash, keys are parent node ids, values are 
+ * @returns a hash, keys are parent node ids, values are
  * { name: nodeName, children: [ childIds ] }
  */
 function groupByParents (nodes) {
     return nodes.reduce(function (acc, current) {
         if (!(current.id in acc)) {
             acc[current.id] = { children: [] };
-        } 
+        }
         acc[current.id].name = current.name;
 
         if (!(current.parentId in acc)) {
