@@ -7,7 +7,7 @@ process.stdin
 	.pipe(PuzzleStream()) // parse lines into puzzle data structures
 	.pipe(SolutionStream()) // solve each puzzle
 	.pipe(FormatStream()) // format output
-	.pipe(process.stdout);
+	.pipe(process.stdout); // write output to console
 
 function PuzzleStream () { return Transformer(puzzleBuilder()); }
 function SolutionStream () { return Transformer(solver()); }
@@ -33,6 +33,9 @@ function puzzleBuilder ()
 
 	// input: line
 	// output: array representing problem
+	// Puzzle 1 2 3  -> [ 1, 2, 3, 4, 5, 6, 7, 8, "_" ]
+	//	      4 5 6
+	//	      7 8 _
 	function build (line, encoding, processed)
 	{
 		var stream = this;
@@ -75,32 +78,40 @@ function solver ()
 		processed();
 	}
 
+	// input: puzzle
+	// output: array, list of directions to move cursor to win
 	function solve (initialPuzzle)
 	{
 		var priorityQueue = new PriorityQueue(minimumWeight);
 
 		var puzzle = initialPuzzle.concat();
 		var path = [];
-		var weight = 0;
+		var puzzlesSeen = {};
+		markSeen(puzzle);
 
 		while (!reachedGoal(puzzle))
 		{
-			console.log("Puzzle: %j, weight: %d, path: %j", puzzle, weight, path);
 			var moves = validMoves(puzzle);
 			moves.forEach
 			(
 				function (move)
 				{
 					var newPuzzle = makeMove(move, puzzle);
-					var additionalWeight = distanceFromGoal(newPuzzle);
-					priorityQueue.enq({ "puzzle": newPuzzle, "weight": weight + additionalWeight, "path": path.concat(move) });
+					if (!seen(newPuzzle))
+					{
+						markSeen(newPuzzle);
+
+						var newPath = path.concat(move);
+						var weight = distanceFromGoal(newPuzzle) + newPath.length;
+
+						priorityQueue.enq({ "puzzle": newPuzzle, "weight": weight, "path": newPath });
+					}
 				}
 			);
 
 			var min = priorityQueue.deq();
 			puzzle = min.puzzle;
 			path = min.path;
-			weight = min.weight;
 		}
 
 		return path;
@@ -108,6 +119,21 @@ function solver ()
 		function minimumWeight (a, b)
 		{
 			return b.weight - a.weight;
+		}
+
+		function seen (puzzle)
+		{
+			return hash(puzzle) in puzzlesSeen;
+		}
+
+		function hash (puzzle)
+		{
+			return JSON.stringify(puzzle);
+		}
+
+		function markSeen (puzzle)
+		{
+			puzzlesSeen[hash(puzzle)] = true;
 		}
 	}
 
@@ -203,23 +229,14 @@ function solver ()
 	}
 
 	// input: puzzle
-	// output: integer, weight representing how far away each element is from its true position
+	// output: integer, weight representing how many elements are out-of-place
 	function distanceFromGoal (puzzle)
 	{
-		var goalPositions = goal.reduce(mapEltToIndex, {});
-
 		return puzzle.reduce(compareToGoal, 0);
-
-		function mapEltToIndex (acc, element, index)
-		{
-			acc[element] = index;
-			return acc;
-		}
 
 		function compareToGoal (differences, puzzleElement, index)
 		{
-			var currentDifference = Math.abs(goalPositions[puzzleElement] - index);
-			return differences + currentDifference;
+			return puzzleElement == goal[index] ? differences : differences + 1;
 		}
 	}
 }
